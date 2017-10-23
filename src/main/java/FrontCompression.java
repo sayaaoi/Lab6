@@ -44,9 +44,22 @@ public class FrontCompression {
         /*
          * Complete this function.
          */
+        String[] singleString = corpus.split("\n");
+        String res = "0, " + singleString[0] + "\n";
+        for (int i = 0; i < singleString.length - 1; i++) {
+            int num = 0;
+            num = longestPrefix(singleString[i], singleString[i + 1]);
+            res += "" + num + ", ";
+            res += singleString[i + 1].substring(num) + "\n";
+        }
+        return res;
 
-        return "";
     }
+
+    /**
+     * to get the first line of string.
+     */
+    public static final int INDEX = 3;
 
     /**
      * Decompress a newline-separated list of words using simple front compression.
@@ -67,8 +80,20 @@ public class FrontCompression {
         /*
          * Complete this function.
          */
+        String[] singleString = corpus.split("\n");
+        String res = singleString[0].substring(INDEX) + "\n";
+        String temp = singleString[0].substring(INDEX);
+        for (int i = 1; i < singleString.length; i++) {
+            int indexOfComma = singleString[i].indexOf(",");
+            String number = singleString[i].substring(0, indexOfComma);
+            int num = Integer.parseInt(number);
+            res += temp.substring(0, num);
+            res += singleString[i].substring(indexOfComma + 2) + "\n";
+            temp = temp.substring(0, num) + singleString[i].substring(indexOfComma + 2);
 
-        return "";
+        }
+
+        return res;
     }
 
     /**
@@ -82,7 +107,24 @@ public class FrontCompression {
         /*
          * Complete this function.
          */
-        return 0;
+        int count = 0;
+        String shortString;
+        String longerString;
+        if (firstString.length() < secondString.length()) {
+            shortString = firstString;
+            longerString = secondString;
+        } else {
+            shortString = secondString;
+            longerString = firstString;
+        }
+        for (int i = 0; i < shortString.length(); i++) {
+            if (shortString.charAt(i) != longerString.charAt(i)) {
+                break;
+            } else {
+                count++;
+            }
+        }
+        return count;
     }
 
     /**
